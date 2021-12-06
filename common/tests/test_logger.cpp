@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "logger.hpp"
 
 class OSRedirector {
 private:
@@ -28,5 +29,6 @@ public:
 TEST(logger, basic_test)
 {
     OSRedirector osr(std::cout);
-    EXPECT_EQ(true, true);
+    tools::logger(tools::log::injector, "Hello World!", 1, '-', 3.14);
+    EXPECT_EQ(osr.getContent().ends_with("Hello World! 1 - 3.14 \n"), true);
 }

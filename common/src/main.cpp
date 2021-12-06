@@ -1,7 +1,6 @@
 #include <iostream>
 #include "sniffer.hpp"
 #include "injector.hpp"
-
 #include "logger.hpp"
 
 int main()
@@ -10,6 +9,6 @@ int main()
     sniffer();
     injector();
 
-    tools::logger(log::source::sniffer, "hello ", std::string("world"), 42, 1.23);
+    tools::logger(tools::log::sniffer, "hello world", 42, '-', 1.23);
     return EXIT_SUCCESS;
 }

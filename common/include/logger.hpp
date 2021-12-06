@@ -2,31 +2,34 @@
 
 #include <iostream>
 #include <fstream>
-#include <string_view>
 #include <map>
+#include "color.hpp"
 
-namespace log {
-enum class source {
+namespace tools {
+
+enum class log {
     sniffer,
     injector
 };
 
-inline std::map<source, std::string_view> source_to_file {
-    {source::sniffer,  "sniffer.log"},
-    {source::injector, "injector.log"}
-};
-}
+std::string get_time();
 
-namespace tools {
 template<typename ...Args>
-void logger(const log::source src, Args &&...data)
+void logger(const log src, Args &&...data)
 {
-    std::ofstream file;
-    file.open(log::source_to_file[src], std::ios::app);
+    static const std::map<log, std::string> log_to_string {
+        {log::sniffer,  "sniffer"},
+        {log::injector, "injector"}
+    };
 
-    (std::cout << ... << data);
-    std::cout << std::endl;
-    (file << ... << data);
-    file << std::endl;
+    std::ofstream file;
+    file.open(log_to_string.at(src) + ".log", std::ios::app);
+
+    std::cout << color::yellow << '[' << get_time() << "] " << color::reset;
+    std::cout << color::cyan << '[' << log_to_string.at(src) << "] " << color::reset;
+    ((std::cout << data << ' '), ...) << std::endl;
+
+    file << '[' << get_time() << "] ";
+    ((file << data << ' '), ...) << std::endl;
 }
 }

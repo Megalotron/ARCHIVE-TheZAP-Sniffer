@@ -16,6 +16,14 @@ else()
     add_compile_options(/W4)
 endif()
 
+set(COMMON_SOURCES
+    common/src/logger.cpp
+)
+
+set(COMMON_TEST_SOURCES
+    common/tests/test_logger.cpp
+)
+
 set(INJECTOR_SOURCES
     injector/src/injector.cpp
 )
@@ -34,8 +42,10 @@ set(SNIFFER_TEST_SOURCES
 
 if(BUILD_TESTS)
     add_executable(TheZapTests
+        ${COMMON_SOURCES}
         ${INJECTOR_SOURCES}
         ${SNIFFER_SOURCES}
+        ${COMMON_TEST_SOURCES}
         ${INJECTOR_TEST_SOURCES}
         ${SNIFFER_TEST_SOURCES}
     )
@@ -53,6 +63,7 @@ if(BUILD_TESTS)
     )
 else()
     add_executable(TheZap
+        ${COMMON_SOURCES}
         ${INJECTOR_SOURCES}
         ${SNIFFER_SOURCES}
         common/src/main.cpp
