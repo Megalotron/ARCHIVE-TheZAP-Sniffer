@@ -1,0 +1,25 @@
+# Editor Files and Folders
+
+.idea/
+.vscode/
+.DS_Store
+*~
+\#*#
+
+# Build Files and Binaries
+
+TheZap
+TheZapTests
+*.log
+*.o
+*.so
+*.dll
+*.dylib
+cmake-build-*/
+*build/
+unit_tests
+
+# Documentation Generation Files
+
+doc/latex/
+doc/html/
