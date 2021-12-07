@@ -10,8 +10,12 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_BINARY_DIR})
 
 option(BUILD_TESTS "When sets to ON, builds the unit tests" OFF)
 
+if(BUILD_TESTS)
+    include(deps/FetchGoogleTest.cmake)
+endif()
+
 if(UNIX)
-    add_compile_options(-Wextra -Weffc++)
+    add_compile_options(-Wall -Wextra -Weffc++)
 else()
     add_compile_options(/W4)
 endif()
@@ -54,7 +58,6 @@ if(BUILD_TESTS)
         sniffer/include
         common/include
     )
-    include(deps/FetchGoogleTest.cmake)
     enable_testing()
     include(GoogleTest)
     gtest_discover_tests(TheZapTests)
