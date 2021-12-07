@@ -11,8 +11,13 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_BINARY_DIR})
 option(BUILD_TESTS "When sets to ON, builds the unit tests" OFF)
 
 if(BUILD_TESTS)
+    set(BIN TheZapTests)
     include(deps/FetchGoogleTest.cmake)
+else()
+    set(BIN TheZap)
 endif()
+
+include(deps/FetchLibTins.cmake)
 
 add_compile_options(-Wall -Wextra -Weffc++)
 
@@ -41,7 +46,7 @@ set(SNIFFER_TEST_SOURCES
 )
 
 if(BUILD_TESTS)
-    add_executable(TheZapTests
+    add_executable(${BIN}
         ${COMMON_SOURCES}
         ${INJECTOR_SOURCES}
         ${SNIFFER_SOURCES}
@@ -49,27 +54,33 @@ if(BUILD_TESTS)
         ${INJECTOR_TEST_SOURCES}
         ${SNIFFER_TEST_SOURCES}
     )
-    target_include_directories(TheZapTests PRIVATE
+    target_include_directories(${BIN} PRIVATE
         injector/include
         sniffer/include
         common/include
     )
     enable_testing()
     include(GoogleTest)
-    gtest_discover_tests(TheZapTests)
-    target_link_libraries(TheZapTests PRIVATE
-        gtest_main
-    )
+    gtest_discover_tests(${BIN})
+    target_link_libraries(${BIN} PRIVATE gtest_main)
 else()
-    add_executable(TheZap
+    add_executable(${BIN}
         ${COMMON_SOURCES}
         ${INJECTOR_SOURCES}
         ${SNIFFER_SOURCES}
         common/src/main.cpp
     )
-    target_include_directories(TheZap PRIVATE
+    target_include_directories(${BIN} PRIVATE
         injector/include
         sniffer/include
         common/include
     )
 endif()
+
+# libtins
+
+add_dependencies(${BIN} libtins)
+ExternalProject_Get_Property(libtins install_dir)
+target_link_directories(${BIN} PRIVATE ${install_dir}/src/libtins-build/lib)
+target_link_libraries(${BIN} PRIVATE tins)
+include_directories(${install_dir}/src/libtins/include)
