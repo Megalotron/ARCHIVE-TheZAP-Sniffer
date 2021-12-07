@@ -17,7 +17,6 @@ else()
     set(BIN TheZap)
 endif()
 
-include(deps/FetchPCAP.cmake)
 include(deps/FetchLibTins.cmake)
 
 add_compile_options(-Wall -Wextra -Weffc++)
@@ -80,6 +79,8 @@ endif()
 
 # PCAP
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/deps")
+find_package(PCAP REQUIRED)
 target_link_libraries(${BIN} PRIVATE ${PCAP_LIBRARY})
 
 # libtins
