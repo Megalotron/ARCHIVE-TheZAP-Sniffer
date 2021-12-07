@@ -58,5 +58,5 @@ jobs:
                 cmake --build .
 
             - name: Run Unit Tests
-              working-directory: ${{ matrix.build_type }}
+              working-directory: ${{ matrix.dir }}
               run: ./${{ matrix.bin }}
