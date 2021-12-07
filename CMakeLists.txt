@@ -59,7 +59,7 @@ if(BUILD_TESTS)
     include(GoogleTest)
     gtest_discover_tests(TheZapTests)
     target_link_libraries(TheZapTests PRIVATE
-        gtest_main
+        gtest gtest_main
     )
 else()
     add_executable(TheZap
