@@ -8,17 +8,21 @@ defaults:
 
 jobs:
     build:
-
         strategy:
             fail-fast: false
             matrix:
-                os: [windows-latest, ubuntu-latest, macos-latest]
-                build_type: [Debug, Release]
-                include:
-                    - os: ubuntu-latest
-                      conan-cxx-version: libstdc++11
-                    - os: macos-latest
-                      conan-cxx-version: libc++
+              os: [windows-latest, ubuntu-latest, macos-latest]
+              build_type: [Debug, Release]
+              include:
+              - os: windows-latest
+                bin: TheZapTests.exe
+                dir: ${{ matrix.build_type }}
+              - os: ubuntu-latest
+                bin: TheZapTests
+                dir: .
+              - os: macos-latest
+                bin: TheZapTests
+                dir: .
 
         name: Build Babel
         runs-on: ${{ matrix.os }}
@@ -54,4 +58,5 @@ jobs:
                 cmake --build .
 
             - name: Run Unit Tests
-              run: ./TheZapTests
+              working-directory: ${{ matrix.dir }}
+              run: ./${{ matrix.bin }}
