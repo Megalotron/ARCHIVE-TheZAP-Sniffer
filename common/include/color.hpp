@@ -1,5 +1,8 @@
 #pragma once
 
+/**
+ *  This namespace contains every color that you can display on the shell
+ */
 namespace color {
     constexpr auto red     =  "\x1B[31m";
     constexpr auto green   =  "\x1B[32m";

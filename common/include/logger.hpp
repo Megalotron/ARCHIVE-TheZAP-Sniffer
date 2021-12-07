@@ -12,8 +12,16 @@ enum class log {
     injector
 };
 
+/**
+ *  @return the current date and hour formatted as std::string
+ */
 std::string get_time();
 
+/**
+ *  Logs an event, a warning or an error in both stdout and a log file
+ *  @param src source of the log, the log will be written into <src>.log
+ *  @param data ... print
+ */
 template<typename ...Args>
 void logger(const log src, Args &&...data)
 {
