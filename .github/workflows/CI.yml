@@ -1,4 +1,4 @@
-name: CI
+name: Action
 
 on: [push, pull_request]
 
@@ -38,24 +38,11 @@ jobs:
                 sudo apt install -y libgl-dev g++-11
                 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 60 --slave /usr/bin/g++ g++ /usr/bin/g++-11
 
-            - name: Create Build Directories
-              run: |
-                mkdir build
-                mkdir build_tests
-
-            - name: Generate Project Build Files
-              working-directory: build
-              run: cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-
             - name: Build Project
-              working-directory: build
-              run: cmake --build .
+              make
 
             - name: Build Unit Tests
-              working-directory: build_tests
-              run: |
-                cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON
-                cmake --build .
+              make tests
 
             - name: Run Unit Tests
               working-directory: ${{ matrix.dir }}
