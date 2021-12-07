@@ -39,10 +39,10 @@ jobs:
                 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 60 --slave /usr/bin/g++ g++ /usr/bin/g++-11
 
             - name: Build Project
-              make
+              run: make
 
             - name: Build Unit Tests
-              make tests
+              run: make tests
 
             - name: Run Unit Tests
               working-directory: ${{ matrix.dir }}
