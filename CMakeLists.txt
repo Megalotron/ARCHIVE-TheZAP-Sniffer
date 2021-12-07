@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_BINARY_DIR})
 option(BUILD_TESTS "When sets to ON, builds the unit tests" OFF)
 
 if(UNIX)
-    add_compile_options(-Wall -Wextra -Weffc++)
+    add_compile_options(-Wextra -Weffc++)
 else()
     add_compile_options(/W4)
 endif()
@@ -59,7 +59,7 @@ if(BUILD_TESTS)
     include(GoogleTest)
     gtest_discover_tests(TheZapTests)
     target_link_libraries(TheZapTests PRIVATE
-        gtest gtest_main
+        gtest_main
     )
 else()
     add_executable(TheZap
