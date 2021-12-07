@@ -79,9 +79,7 @@ endif()
 
 # PCAP
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/deps")
-find_package(PCAP REQUIRED)
-target_link_libraries(${BIN} PRIVATE ${PCAP_LIBRARY})
+target_link_libraries(${BIN} PRIVATE pcap)
 
 # libtins
 
