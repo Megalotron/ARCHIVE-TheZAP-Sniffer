@@ -60,6 +60,7 @@ if(BUILD_TESTS)
     gtest_discover_tests(TheZapTests)
     target_link_libraries(TheZapTests PRIVATE
         gtest_main
+        pthread
     )
 else()
     add_executable(TheZap

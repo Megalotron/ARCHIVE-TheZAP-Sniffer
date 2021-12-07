@@ -24,7 +24,7 @@ jobs:
                 bin: TheZapTests
                 dir: .
 
-        name: Build Babel
+        name: CI
         runs-on: ${{ matrix.os }}
 
         steps:
