@@ -6,5 +6,6 @@ ExternalProject_Add(
         libtins
         GIT_REPOSITORY  https://github.com/mfontanini/libtins.git
         GIT_TAG         origin/master
-        CMAKE_ARGS      -DLIBTINS_ENABLE_CXX11=1
+        BUILD_COMMAND   ${CMAKE_COMMAND} . -B build/ -DCMAKE_BUILD_TYPE=Debug
+        COMMAND         ${CMAKE_COMMAND} --build build/
 )
