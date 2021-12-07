@@ -1,8 +1,10 @@
 all:
-	@./scripts/build_project.sh
+	cmake . -B build/ -DCMAKE_BUILD_TYPE=Debug
+	cmake --build build/
 
 tests:
-	@./scripts/build_tests.sh
+	cmake . -B build-tests/ -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTS=ON
+	cmake --build build-tests/
 
 clean:
 	@rm -rf build
