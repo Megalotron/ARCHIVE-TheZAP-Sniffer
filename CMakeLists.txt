@@ -14,11 +14,7 @@ if(BUILD_TESTS)
     include(deps/FetchGoogleTest.cmake)
 endif()
 
-if(UNIX)
-    add_compile_options(-Wall -Wextra -Weffc++)
-else()
-    add_compile_options(/W4)
-endif()
+add_compile_options(-Wall -Wextra -Weffc++)
 
 set(COMMON_SOURCES
     common/src/logger.cpp
