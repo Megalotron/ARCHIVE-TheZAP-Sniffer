@@ -25,7 +25,7 @@ const std::map<protocol, std::string> protocol_to_str {
  *  @brief struct that represent a packet content
  */
 struct packet {
-    protocol protocol;
+    network::protocol protocol;
     std::string src_ip;
     std::string dst_ip;
     unsigned short src_port;
