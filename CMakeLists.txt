@@ -77,6 +77,10 @@ else()
     )
 endif()
 
+# PTHREAD
+
+target_link_libraries(${BIN} PRIVATE pthread)
+
 # PCAP
 
 target_link_libraries(${BIN} PRIVATE pcap)
