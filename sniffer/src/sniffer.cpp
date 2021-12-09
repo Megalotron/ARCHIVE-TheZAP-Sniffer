@@ -10,8 +10,9 @@ const std::map<std::type_index, network::protocol> protocol_map {
 
 core::sniffer::sniffer()
     : m_interface(Tins::NetworkInterface::default_interface().name()),
-    m_sniff_process([&]() {Tins::Sniffer(m_interface).sniff_loop(Tins::make_sniffer_handler(this, &core::sniffer::callback));})
-
+    m_sniff_process([&]() {
+        Tins::Sniffer(m_interface).sniff_loop(Tins::make_sniffer_handler(this, &core::sniffer::callback));
+    })
 {
     tools::logger(tools::log::sniffer, "Sniffer ON, listening on ", m_interface);
 }
@@ -50,7 +51,12 @@ void core::sniffer::get_packet(Tins::PDU &pdu, const Tins::IP &ip)
     std::scoped_lock mtx(m_mtx);
     try {
         const auto &protocol = pdu.rfind_pdu<T>();
-        m_packets.push_back({protocol_map.at(typeid(T)), ip.src_addr().to_string(), ip.dst_addr().to_string(), protocol.sport(), protocol.dport(), get_payload(pdu)});
+        m_packets.push_back({protocol_map.at(typeid(T)),
+                             ip.src_addr().to_string(),
+                             ip.dst_addr().to_string(),
+                             protocol.sport(),
+                             protocol.dport(),
+                             get_payload(pdu)});
     } catch (...) {}
 }
 
@@ -58,10 +64,8 @@ bool core::sniffer::callback(Tins::PDU &pdu)
 {
     const auto &ip = pdu.rfind_pdu<Tins::IP>();
 
-    try {
-        get_packet<Tins::TCP>(pdu, ip);
-        get_packet<Tins::UDP>(pdu, ip);
-    } catch (...) {}
+    get_packet<Tins::TCP>(pdu, ip);
+    get_packet<Tins::UDP>(pdu, ip);
 
     return true;
 }

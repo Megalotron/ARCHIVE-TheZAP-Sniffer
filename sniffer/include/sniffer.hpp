@@ -13,10 +13,10 @@ namespace core {
  */
 class sniffer {
 private:
-    std::vector<network::packet> m_packets;
+    mutable std::mutex m_mtx{};
+    std::vector<network::packet> m_packets{};
     std::string m_interface;
     std::thread m_sniff_process;
-    mutable std::mutex m_mtx;
 
     bool callback(Tins::PDU &pdu);
     template<typename T>
