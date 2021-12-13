@@ -40,7 +40,7 @@ std::vector<uint8_t> core::sniffer::get_payload(Tins::PDU &pdu)
 {
     try {
         return pdu.rfind_pdu<Tins::RawPDU>().payload();
-    } catch (...) {
+    } catch (const Tins::pdu_not_found &) {
         return {};
     }
 }
@@ -57,7 +57,7 @@ void core::sniffer::get_packet(Tins::PDU &pdu, const Tins::IP &ip)
                              protocol.sport(),
                              protocol.dport(),
                              get_payload(pdu)});
-    } catch (...) {}
+    } catch (const Tins::pdu_not_found &) {}
 }
 
 bool core::sniffer::callback(Tins::PDU &pdu)
